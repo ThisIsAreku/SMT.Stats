@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <GameFolder>C:\SteamLibrary\steamapps\common\Supermarket Together</GameFolder>
+        <DllFolder>$(GameFolder)\Supermarket Together_Data\Managed</DllFolder>
+        <PluginFolder>$(GameFolder)\BepInEx\scripts</PluginFolder>
+    </PropertyGroup>
+</Project>

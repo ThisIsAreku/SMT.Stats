@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>SMT.Stats</AssemblyName>
+    <Product>Supermarker Together Stats</Product>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>SMT.Stats</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all" />
+    <PackageReference Include="prometheus-net" Version="8.1.0" />
+    <PackageReference Include="UnityEngine.Modules" Version="2023.1.9" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Import Project="$(SolutionDir)DevVars.targets" />
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(DllFolder)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mirror">
+      <HintPath>$(DllFolder)\Mirror.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CopyToPluginFolder" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <CopyToPluginFolder Include="$(TargetDir)\SMT.Stats.dll" />
+      <CopyToPluginFolder Include="$(TargetDir)\SMT.Stats.pdb" />
+    </ItemGroup>
+
+    <Message Importance="high" Text="Copying files to plugin folders" />
+    <Copy SourceFiles="@(CopyToPluginFolder)" DestinationFolder="$(PluginFolder)" />
+  </Target>
+</Project>
